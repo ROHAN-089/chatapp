@@ -9,6 +9,7 @@ import { useThemeStore } from "./store/useThemeStore.js";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar.jsx";
+import KeyInitializer from "./components/KeyInitializer.jsx";
 
 function App() {
   const { authUser , checkAuth , isCheckingAuth , onlineUsers } = useAuthStore();
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div>
+      {authUser && <KeyInitializer />}
       <Navbar data-theme={theme} />
       <Routes>
         <Route path="/" element={ authUser? <HomePage/> : <Navigate to='/login/' />} />

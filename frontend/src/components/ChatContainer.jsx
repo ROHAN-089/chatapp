@@ -98,7 +98,21 @@ const ChatContainer = () => {
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />
               )}
-              {message.text && <p>{message.text}</p>}
+              {message.text && (
+                <p>
+                  {message.isEncrypted ? (
+                    <span className="text-red-500" title={message.encryptionError}>
+                      🔒 Encrypted message (unable to decrypt) 
+                    </span>
+                  ) : message.isDecrypted ? (
+                    <span className="text-green-500">
+                      🔓 {message.text}
+                    </span>
+                  ) : (
+                    message.text
+                  )}
+                </p>
+              )}
             </div>
           </div>
         ))}

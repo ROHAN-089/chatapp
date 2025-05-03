@@ -122,3 +122,28 @@ export const checkAuth = (req, res) => {
         return res.status(500).json({ message: 'Internal server error in Auth controller!' });
     }
 }
+
+export const updatePublicKey = async (req, res) => {
+    try {
+        const { publicKey } = req.body;
+        
+        if (!publicKey) {
+            return res.status(400).json({ message: 'Public key is required' });
+        }
+        
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user._id,
+            { publicKey: publicKey },
+            { new: true }
+        );
+        
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        return res.status(200).json({ message: 'Public key updated successfully' });
+    } catch (error) {
+        console.error('Error updating public key:', error);
+        return res.status(500).json({ message: error.message || 'Failed to update public key' });
+    }
+}
